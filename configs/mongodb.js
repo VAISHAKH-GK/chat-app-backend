@@ -5,7 +5,7 @@ let state = {db:null};
 module.exports.connect = (done) => {
   
   const uri = process.env.MONGODB_URI ;
-  const dbname = process.env.DATABASE_SAMPLE;
+  const dbname = process.env.DATABASE;
 
   const client = new MongoClient(uri);
 
