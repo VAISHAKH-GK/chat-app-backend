@@ -5,13 +5,10 @@ const userHelper = require("../../Helpers/userHelper");
 
 
 
-router.get('/test', async (req,res) => {
-  await db.get().collection("hai").insertOne({"name":"testing"});
-  console.log(req.session.user);
-  req.session.user = {name:"vaishakh"}
-  res.json("working");
-  console.log("request recieved");
-});
+// router.get('/test', async (req,res) => {
+//   res.json("working");
+//   console.log("request recieved");
+// });
 
 router.post("/signup", (req,res) => {
   const userName = req.body.userName;

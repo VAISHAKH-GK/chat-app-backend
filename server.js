@@ -2,8 +2,16 @@ const express = require("express");
 const db = require("./configs/mongodb");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const cors = require("cors");
+
 
 const app = express();
+
+
+app.use(cors({
+  origins:"http://localhost:3000",
+  credentials: true
+}));
 
 app.use(bodyParser.urlencoded({
   extended:true
