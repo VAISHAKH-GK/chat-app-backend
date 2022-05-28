@@ -10,7 +10,6 @@ module.exports = {
   isPasswordCorrect:({hashedPassword,password}) => {
     return new Promise ( async (resolve,reject) => {
       const match = await bcrypt.compare(password,hashedPassword);
-      console.log(match);
       resolve(match);
     });
   }

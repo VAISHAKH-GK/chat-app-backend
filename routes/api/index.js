@@ -1,6 +1,5 @@
 const express  = require("express");
 const router = express.Router();
-const db = require("../../configs/mongodb");
 const userHelper = require("../../Helpers/userHelper");
 
 
@@ -24,23 +23,29 @@ router.post("/login", (req,res) => {
   const userName = req.body.userName;
   const password = req.body.password;
   userHelper.doLogin(userName,password).then((response) => {
-    req.session.user = response.user
+    req.session.userId = response.user.id;
     res.json(response);
   }).catch((response) => {
     res.json(response);
   })
 });
 
+router.get("/getuserdata", (req,res) => {
+  const userId = req.session.userId;
+  console.log("userdata = " + userId);
+  if (!userId) return res.json(false);
+  userHelper.getUserData(userId).then((response) => {
+    const user = response;
+    console.log(`user ${user}`);
+    res.json(user);
+  });
+});
 
-
-
-
-
-
-
-
-
-
+router.get("/logout", (req,res) => {
+  console.log(req.session)
+  req.session.destroy();
+  res.json();
+});
 
 
 

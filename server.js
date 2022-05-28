@@ -3,14 +3,21 @@ const db = require("./configs/mongodb");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
 
+app.use(cookieParser());
+
+const oneMinute = 1000 * 60;
 
 app.use(cors({
-  origins:"http://localhost:3000",
-  credentials: true
+  origin:"http://localhost:3000",
+  credentials: true,
+  cookie:{
+    originalMaxAge:oneMinute
+  }
 }));
 
 app.use(bodyParser.urlencoded({
