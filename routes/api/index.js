@@ -32,17 +32,14 @@ router.post("/login", (req,res) => {
 
 router.get("/getuserdata", (req,res) => {
   const userId = req.session.userId;
-  console.log("userdata = " + userId);
   if (!userId) return res.json(false);
   userHelper.getUserData(userId).then((response) => {
     const user = response;
-    console.log(`user ${user}`);
     res.json(user);
   });
 });
 
 router.get("/logout", (req,res) => {
-  console.log(req.session)
   req.session.destroy();
   res.json();
 });
