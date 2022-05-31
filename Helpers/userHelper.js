@@ -10,7 +10,7 @@ module.exports = {
       if ( isUserNameUsed === true ) return reject({success:false,reason:"userName in Use"});
       const hashedPassword = await signUpHelper.hashPassword(password);
       const userId = await signUpHelper.storeUser({userName,password:hashedPassword});
-      resolve({success:true,user:{userName,id:userId}});
+      resolve({success:true});
     });
   },
   doLogin:(userName,password) => {

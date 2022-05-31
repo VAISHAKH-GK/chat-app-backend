@@ -10,21 +10,25 @@ const app = express();
 
 app.use(cookieParser());
 
-const oneMinute = 1000 * 60;
+const fiveMinute = 1000 * 60 * 5;
 
 app.use(cors({
   origin:"http://localhost:3000",
-  credentials: true,
-  cookie:{
-    originalMaxAge:oneMinute
-  }
+  credentials: true
 }));
 
 app.use(bodyParser.urlencoded({
   extended:true
 }));
 
-app.use(session({secret:process.env.SESSION_KEY,saveUninitialized:false,resave:true}));
+app.use(session({
+  secret:process.env.SESSION_KEY,
+  saveUninitialized:false,
+  resave:true,
+  cookie:{
+    maxAge:fiveMinute
+  }
+}));
 
 app.use(bodyParser.json());
 
