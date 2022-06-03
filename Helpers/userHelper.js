@@ -18,7 +18,7 @@ module.exports = {
       const user = await loginHelper.getUser(userName);
       if ( user == null ) return reject({success:false,reason:"No user with this UserName"});
       const match = await loginHelper.isPasswordCorrect({hashedPassword:user.password,password:password});
-      if ( match ) resolve({success:true,user:{userName,id:user._id}});
+      if ( match ) resolve({success:true,user:{userName,_id:user._id}});
       else reject({success:false,reason:"Wrong Password"});
     });
   },
@@ -26,6 +26,12 @@ module.exports = {
     return new Promise ( async (resolve,reject) => {
       const user = await db.get().collection("userData").findOne({_id:ObjectId(userId)},{projection:{userName:true,_id:false}});
       resolve({id:userId,userName:user.userName});
+    });
+  },
+  getUsers:(userId) => {
+    return new Promise ( async (resolve,reject) => {
+      const users = await db.get().collection("userData").find({_id:{$ne:ObjectId(userId)}}).toArray();
+      resolve(users);
     });
   }
 }

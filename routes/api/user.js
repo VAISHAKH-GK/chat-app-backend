@@ -23,8 +23,7 @@ router.post("/login", (req,res) => {
   const userName = req.body.userName;
   const password = req.body.password;
   userHelper.doLogin(userName,password).then((response) => {
-    req.session.userId = response.user.id;
-    req.session.isLoggedIn = true;
+    req.session.userId = response.user._id; req.session.isLoggedIn = true;
     res.json(response);
   }).catch((response) => {
     res.json(response);
@@ -55,6 +54,17 @@ router.get("/isloggedin",(req,res) => {
   console.log(req.session.isLoggedIn);
   const isLoggedIn = req.session.isLoggedIn ?? false;
   res.json(isLoggedIn);
+});
+
+router.get("/getusers",(req,res) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    return res.json(false);
+  }
+  userHelper.getUsers(userId).then((users) => {
+    console.log(users);
+    res.json(users);
+  });
 });
 
 

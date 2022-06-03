@@ -4,13 +4,13 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
+const userRouter = require("./routes/api/user");
 
-
+const port = process.env.PORT ;
+const fiveMinute = 1000 * 60 * 5;
 const app = express();
 
 app.use(cookieParser());
-
-const fiveMinute = 1000 * 60 * 5;
 
 app.use(cors({
   origin:"http://localhost:3000",
@@ -37,16 +37,7 @@ db.connect((err) => {
   else console.log("connected");
 });
 
-const apiRouter = require("./routes/api/index.js");
-
-
-const port = process.env.PORT ;
-
-
-app.use('/api',apiRouter);
-
-
-
+app.use('/api/user',userRouter);
 
 app.listen(port,() => {
   console.log("server started");
