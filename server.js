@@ -1,4 +1,5 @@
 const express = require("express");
+const { createServer } = require("http");
 const db = require("./configs/mongodb");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -9,6 +10,8 @@ const userRouter = require("./routes/api/user");
 const port = process.env.PORT ;
 const fiveMinute = 1000 * 60 * 5;
 const app = express();
+
+const server = createServer(app);
 
 app.use(cookieParser());
 
@@ -39,7 +42,7 @@ db.connect((err) => {
 
 app.use('/api/user',userRouter);
 
-app.listen(port,() => {
+server.listen(port,() => {
   console.log("server started");
 });
 
