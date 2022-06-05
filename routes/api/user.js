@@ -27,13 +27,9 @@ router.post("/login", (req, res) => {
 
 router.get("/getuserdata", (req, res) => {
   const userId = req.session.userId;
-  console.log("user")
-  console.log(userId);
   if (!userId) return res.json(false);
   userHelper.getUserData(userId).then((response) => {
     const user = response;
-    console.log("user")
-    console.log(response);
     res.json(user);
   });
 });
@@ -45,19 +41,14 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/isloggedin", (req, res) => {
-  console.log("is logged in")
-  console.log(req.session.isLoggedIn);
   const isLoggedIn = req.session.isLoggedIn ?? false;
   res.json(isLoggedIn);
 });
 
 router.get("/getusers", (req, res) => {
   const userId = req.session.userId;
-  if (!userId) {
-    return res.json(false);
-  }
+  if (!userId) return res.json(false);
   userHelper.getUsers(userId).then((users) => {
-    console.log(users);
     res.json(users);
   });
 });
