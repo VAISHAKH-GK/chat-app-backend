@@ -1,6 +1,8 @@
 const express = require("express");
-const router = express.Router();
 const userHelper = require("../../Helpers/userHelper");
+const io = require("../../configs/socketIo");
+
+const router = express.Router();
 
 router.post("/signup", (req, res) => {
   const userName = req.body.userName;
@@ -59,6 +61,10 @@ router.get("/getusers", (req, res) => {
     res.json(users);
   });
 });
+
+io.on("connect",(socket => {
+  console.log("socket connected");
+}));
 
 
 
