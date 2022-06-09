@@ -7,6 +7,7 @@ const session = require("express-session");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const userRouter = require("./routes/api/user");
+const messageRouter = require("./routes/api/message");
 const io = require("./configs/socketIo");
 
 const port = process.env.PORT ;
@@ -45,6 +46,7 @@ db.connect((err) => {
 });
 
 app.use('/api/user',userRouter);
+app.use('/api/message',messageRouter);
 
 server.listen(port,() => {
   console.log("server started");

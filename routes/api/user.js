@@ -53,11 +53,6 @@ router.get("/getusers", (req, res) => {
   });
 });
 
-io.on("connect",(socket => {
-  console.log("socket connected");
-}));
-
-
 
 
 
