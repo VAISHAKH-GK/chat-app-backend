@@ -9,7 +9,7 @@ module.exports = {
       const isUserNameUsed = await signUpHelper.isUserNameUsed(userName);
       if ( isUserNameUsed === true ) return reject({success:false,reason:"userName in Use"});
       const hashedPassword = await signUpHelper.hashPassword(password);
-      const userId = await signUpHelper.storeUser({userName,password:hashedPassword});
+      const userId = signUpHelper.storeUser({userName,password:hashedPassword});
       resolve({success:true});
     });
   },
@@ -25,7 +25,7 @@ module.exports = {
   getUserData: (userId) => {
     return new Promise ( async (resolve,reject) => {
       const user = await db.get().collection("userData").findOne({_id:ObjectId(userId)},{projection:{userName:true,_id:false}});
-      resolve({id:userId,userName:user.userName});
+      resolve({_id:userId,userName:user.userName});
     });
   },
   getUsers:(userId) => {

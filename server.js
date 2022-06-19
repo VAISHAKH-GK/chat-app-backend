@@ -1,6 +1,5 @@
 const express = require("express");
 const { createServer } = require("http");
-const { Server } = require("socket.io");
 const db = require("./configs/mongodb");
 const bodyParser = require("body-parser");
 const session = require("express-session");
