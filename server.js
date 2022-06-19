@@ -9,7 +9,7 @@ const userRouter = require("./routes/api/user");
 const messageRouter = require("./routes/api/message");
 const io = require("./configs/socketIo");
 
-const port = process.env.PORT ;
+const port = process.env.PORT;
 const fiveMinute = 1000 * 60 * 5;
 const app = express();
 
@@ -20,34 +20,34 @@ io.attach(server);
 app.use(cookieParser());
 
 app.use(cors({
-  origin:["http://localhost:3000"],
+  origin: ["http://localhost:3000"],
   credentials: true
 }));
 
 app.use(bodyParser.urlencoded({
-  extended:true
+  extended: true
 }));
 
 app.use(session({
-  secret:process.env.SESSION_KEY,
-  saveUninitialized:false,
-  resave:true,
-  cookie:{
-    maxAge:fiveMinute
+  secret: process.env.SESSION_KEY,
+  saveUninitialized: false,
+  resave: true,
+  cookie: {
+    maxAge: fiveMinute
   }
 }));
 
 app.use(bodyParser.json());
 
 db.connect((err) => {
-  if ( err ) console.log(err);
+  if (err) console.log(err);
   else console.log("connected");
 });
 
-app.use('/api/user',userRouter);
-app.use('/api/message',messageRouter);
+app.use('/api/user', userRouter);
+app.use('/api/message', messageRouter);
 
-server.listen(port,() => {
+server.listen(port, () => {
   console.log("server started");
 });
 

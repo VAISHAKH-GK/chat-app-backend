@@ -27,10 +27,7 @@ const createDm = (user1, user2) => {
 
 const findDm = (user1, user2) => {
   return new Promise(async (resolve, reject) => {
-    console.log(user1);
-    console.log(user2);
     const response = await db.get().collection("dms").findOne({ user1, user2 });
-    console.log(response);
     resolve(response);
   });
 }
@@ -44,8 +41,6 @@ const getDm = (user1, user2) => {
       } else if (response2) {
         response = response2;
       }
-      console.log("dm");
-      console.log(response);
       let dm = response;
       if (dm) {
         resolve(dm);
@@ -80,7 +75,6 @@ router.get("/getmessages", async (req, res) => {
 });
 
 let sockets = 0;
-let connectedUsers = {};
 
 const addMessageToServer = (message) => {
   return new Promise(async (resolve, reject) => {
@@ -92,19 +86,12 @@ const addMessageToServer = (message) => {
 
 io.on("connect", (socket => {
   sockets++;
-  console.log(socket.handshake.headers.cookie);
-  console.log("socket connected");
-  console.log("total connected sockets is " + sockets);
   socket.on("message", (message) => {
-    console.log("new message");
-    console.log(`message${message.to_id}`);
     addMessageToServer(message);
     socket.broadcast.emit(`message${message.to._id}`, message);
   });
   socket.on("disconnect", (io) => {
     sockets--;
-    console.log("socket disconnected");
-    console.log("total connected sockets is " + sockets);
   });
 }));
 
