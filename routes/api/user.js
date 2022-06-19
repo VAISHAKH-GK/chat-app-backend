@@ -34,7 +34,7 @@ router.get("/getuserdata", (req, res) => {
   });
 });
 
-router.get("/logout", (req, res) => {
+router.delete("/logout", (req, res) => {
   req.session.userId = null;
   req.session.isLoggedIn = false;
   res.json();
