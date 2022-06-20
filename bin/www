@@ -1,2 +1,18 @@
 require('dotenv/config');
-require('../server.js');
+
+const { createServer } = require("http");
+const io = require("../configs/socketIo");
+const app = require("../server.js");
+
+const server = createServer(app);
+io.attach(server);
+
+const port = process.env.PORT;
+
+
+
+
+
+server.listen(port, () => {
+  console.log("server started");
+});
