@@ -64,17 +64,14 @@ const getMessages = (dm) => {
 
 router.get("/getmessages", async (req, res) => {
   if (!req?.session?.userId) {
-    res.json(false);
-  } else {
-    const user = req.session.userId;
-    const dmUser = req.query.dmuser;
-    const dm = await getDm(user, dmUser);
-    const messages = await getMessages(dm) || [];
-    res.json(messages);
+    return res.json(false);
   }
+  const user = req.session.userId;
+  const dmUser = req.query.dmuser;
+  const dm = await getDm(user, dmUser);
+  const messages = await getMessages(dm) || [];
+  res.json(messages);
 });
-
-let sockets = 0;
 
 const addMessageToServer = (message) => {
   return new Promise(async (resolve, reject) => {
@@ -85,13 +82,11 @@ const addMessageToServer = (message) => {
 }
 
 io.on("connect", (socket => {
-  sockets++;
   socket.on("message", (message) => {
     addMessageToServer(message);
     socket.broadcast.emit(`message${message.to._id}`, message);
   });
   socket.on("disconnect", (io) => {
-    sockets--;
   });
 }));
 
